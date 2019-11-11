@@ -1,6 +1,7 @@
+import { ModalProvider } from 'styled-react-modal';
 import { configure, addDecorator, addParameters } from '@storybook/react';
-import {DEFAULT_VIEWPORT} from '@storybook/addon-viewport'
-import {withKnobs} from '@storybook/addon-knobs'
+import { DEFAULT_VIEWPORT } from '@storybook/addon-viewport'
+import { withKnobs } from '@storybook/addon-knobs'
 
 import { GlobalStyle } from '../client/styles/globalStyles';
 
@@ -14,4 +15,11 @@ addParameters({
     },
 });
 addDecorator(withKnobs);
-addDecorator(fn => <><GlobalStyle/>{fn()}</>)
+addDecorator(fn => (
+    <>
+        <GlobalStyle />
+        <ModalProvider>
+            {fn()}
+        </ModalProvider>
+    </>
+))

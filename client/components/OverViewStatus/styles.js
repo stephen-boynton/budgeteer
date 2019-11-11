@@ -7,6 +7,9 @@ export const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	height: 300px;
+	width: 100%;
+	border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
 `;
 
 export const Title = styled.h2`
