@@ -1,9 +1,9 @@
-import { faShoppingBag, faWineBottle, faLightbulb, faGasPump, faPhone, faQuestion, faHome, faShoppingCart, faBolt, faTicketAlt, faFilm } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faWineBottle, faLightbulb, faGasPump, faPhone, faQuestion, faHome, faShoppingCart, faBolt, faTicketAlt, faFilm, faAsterisk } from '@fortawesome/free-solid-svg-icons';
 
 import { IconButton } from '../IconButton'
 import { Container } from './styles';
 
-const fakeData = {
+export const fakeData = {
 	budgets: [
 		{
 			section: 'groceries',
@@ -50,20 +50,63 @@ const fakeData = {
 	]
 }
 
-const icons = {
-	groceries: faShoppingCart,
-	entertainment: faFilm,
-	power: faBolt,
-	gas: faGasPump,
-	phone: faPhone,
-	unexpected: faQuestion,
-	rent: faHome
+const config = {
+	all: {
+		link: {
+			pathname: '/',
+		},
+		icon: faAsterisk
+	},
+	groceries: {
+		link: {
+			pathname: '/budget?type=groceries'
+		},
+		icon: faShoppingCart
+	},
+	entertainment: {
+		link: {
+			pathname: '/budget?type=entertainment'
+		},
+		icon: faFilm
+	},
+	power: {
+		link: {
+			pathname: '/budget?type=power'
+		},
+		icon: faBolt
+	},
+	gas: {
+		link: {
+			pathname: '/budget?type=gas'
+		},
+		icon: faGasPump
+	},
+	phone: {
+		link: {
+			pathname: '/budget?type=phone'
+		},
+		icon: faPhone
+	},
+	unexpected: {
+		link: {
+			pathname: '/budget?type=unexpected'
+		},
+		icon: faQuestion
+	},
+	rent: {
+		link: {
+			pathname: '/budget?type=rent'
+		},
+		icon: faHome
+	},
 }
 
-export const NavSection = ({ }) => {
+export const NavSection = ({ activeLink }) => {
+	const acitve = (link) => (name) => link === name;
+	const isActive = acitve(activeLink);
 	return (
 		<Container>
-			{fakeData.budgets.map((b, i) => <IconButton icon={icons[b.section]} size='3x' key={i} />)}
+			{Object.keys(config).map((c, i) => <IconButton active={isActive(c)} link={config[c].link} icon={config[c].icon} size='3x' key={i} />)}
 		</Container>
 	);
 };

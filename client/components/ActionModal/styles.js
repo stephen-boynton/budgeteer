@@ -2,8 +2,8 @@ import Modal from 'styled-react-modal'
 import styled from 'styled-components';
 
 export const StyledModal = Modal.styled`
-  width: 15rem;
-  height: 10rem;
+  width: 25rem;
+  height: 20rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,6 +17,7 @@ export const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	height: 300px;
+	padding: 10px;
 `;
 
 export const Form = styled.form`
@@ -28,27 +29,36 @@ export const Form = styled.form`
 `
 
 export const Input = styled.input`
-	width: 100px;
-	height: 18px;
+	width: 200px;
+	height: 20px;
 	margin: 5px 0;
+	font-size: 16px;
 `
 
 export const ButtonContainer = styled.div`
 	display: flex;
-	justify-content: space-between;
-	width: 100px;
+	justify-content: space-around;
+	width: 200px;
+	margin: 10px 0px;
 `
 
 export const Button = styled.button`
 	padding: 5px;
+	font-size: 16px;
+
+	:hover {
+		background-color: #c4c6c6;
+	}
 `
 
 export const Title = styled.p`
 	margin: 5px;
+	font-size: 26px;
 `
 
 export const Total = styled.p`
 	font-style: italic;
 	color: grey;
-	font-size: 13px;
+	font-size: 16px;
+	margin-bottom: 15px;
 `
