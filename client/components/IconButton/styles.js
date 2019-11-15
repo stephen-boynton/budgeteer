@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
 export const Container = styled.button`
-	background-color: ${p => p.active ? '#da8628' : 'white'};
+	background-color: ${p => p.active ? '#ecc496' : 'white'};
 	border: none;
 	border-radius: 100%;
 	display: flex;
@@ -18,7 +18,7 @@ export const Container = styled.button`
 	}
 
 	:focus {
-		background-color: #da8628;
+		background-color: #ecc496;
 	}
 `;
 

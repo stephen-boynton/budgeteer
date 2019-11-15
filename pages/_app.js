@@ -3,6 +3,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { ModalProvider } from 'styled-react-modal'
 import { GlobalStyle } from '../client/styles/globalStyles';
+import { withApollo } from '../apollo/client';
 
 const theme = {
 	colors: {
@@ -10,7 +11,7 @@ const theme = {
 	}
 };
 
-export default class MyApp extends App {
+class MyApp extends App {
 	render() {
 		const { Component, pageProps } = this.props;
 		return (
@@ -25,3 +26,5 @@ export default class MyApp extends App {
 		);
 	}
 }
+
+export default withApollo(MyApp);
