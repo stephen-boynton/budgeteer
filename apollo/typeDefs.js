@@ -4,33 +4,37 @@ export const typeDefs = gql`
   type FullBudget {
     active_date: String
     grand_total: Float
+    grand_amount: Float
     groceries: Budget
     entertainment: Budget
     power: Budget
+    phone: Budget
     gas: Budget
     unexpected: Budget
     rent: Budget
   }
 
   input Action {
-    action: String!
-    amount: Float!
+    operator: String
+    amount: Float
+    note: String
   }
 
   type History {
-    action: String!
-    amount: Float!,
-    timestamp: String!
+    operator: String
+    amount: Float,
+    note: String,
+    timestamp: String
   }
 
   type Budget {
-    total: Float!
-    amount: Float!
-    history: [History!]!
+    total: Float
+    amount: Float
+    history: [History]!
   }
 
   type Query {
-    getFullBudget: FullBudget!
+    getFullBudget: FullBudget
   }
 
   type Mutation {

@@ -1,6 +1,7 @@
 {
-  "active_date": "2019-11-14T03:15:55.620Z",
-  "grand_total": 2610.00,
+  "active_date": "2019-11-16T03:17:55.6202",
+  "grand_total": 2810.00,
+  "grand_amount": 2810.00,
   "groceries": {
     "history": [],
     "amount": 500.00,
@@ -20,6 +21,11 @@
     "history": [],
     "amount": 100.00,
     "total": 100.00
+  },
+  "phone": {
+    "history": [],
+    "amount": 200.00,
+    "total": 200.00
   },
   "unexpected": {
     "history": [],

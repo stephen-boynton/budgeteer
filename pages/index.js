@@ -1,65 +1,50 @@
-import React from 'react'
-import styled from 'styled-components'
-import { OverViewStatus } from '../client/components/OverViewStatus'
-import { NavSection } from '../client/components/NavSection'
+import React, { useState } from 'react'
 import gql from 'graphql-tag'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
+import Layout from '../client/components/Layout'
+import { GET_FULL_BUDGET } from '../client/gql'
 // @TODO: PWA config: https://github.com/hanford/next-offline
 
-const GET_FULL_BUDGET = gql`
-  query GetFullBudget {
-    getFullBudget {
-      grand_total
-    }
-  }
-`
-
-const UPDATE_BUDGET = gql`
-  mutation UpdateBudget($type: String!, $action: Action!) {
-    updateBudget(type: $type, action: $action){
-      total,
-      amount,
-      history
-    }
-  }
-`
-
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  background-color: #a11b5a;
-  z-index: 1000;
-`
-
 export default () => {
-  // const {
-  //   data,
-  //   error
-  // } = useQuery(GET_FULL_BUDGET)
+  const [title, setTitle] = useState('overview');
+  let selectedData = {
+    amount: 0,
+    total: 0
+  };
 
-  const [updateBudget, { data, error }] = useMutation(UPDATE_BUDGET)
+  const {
+    data,
+    error
+  } = useQuery(GET_FULL_BUDGET)
 
-
-  const onClick = () => {
-    updateBudget({
-      variables: {
-        type: 'groceries',
-        action: {
-          action: 'add',
-          amount: 25.15
-        }
-      }
-    })
+  const handleSelection = (type) => (e) => {
+    e.preventDefault();
+    return setTitle(type)
   }
-  if (data) console.log(data);
-  if (error) console.log(error);
+
+  if (!data) return (<div><h1>Loading</h1></div>);
+  if (error) return console.log(error);
+  const isOverview = title === 'overview'
+  const { getFullBudget: fullBudget } = data;
+
+  if (isOverview) {
+    selectedData = {
+      amount: fullBudget.grand_amount,
+      total: fullBudget.grand_total
+    }
+  } else {
+    selectedData = {
+      amount: fullBudget[title].amount,
+      total: fullBudget[title].total
+    }
+  }
+
   return (
-    <Container onClick={onClick}>
-      <OverViewStatus allowActions={false} title='Overview' amount={900} total={3650} />
-      <NavSection activeLink={'all'} />
-    </Container>
+    <Layout
+      title={title}
+      data={selectedData}
+      handleSelection={handleSelection}
+      allowActions={!isOverview}
+    />
   )
 }

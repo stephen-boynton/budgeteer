@@ -50,63 +50,48 @@ export const fakeData = {
 	]
 }
 
-const config = {
-	all: {
-		link: {
-			pathname: '/',
-		},
+const config = [
+	{
+		type: 'overview',
 		icon: faAsterisk
 	},
-	groceries: {
-		link: {
-			pathname: '/budget?type=groceries'
-		},
+	{
+		type: 'groceries',
 		icon: faShoppingCart
 	},
-	entertainment: {
-		link: {
-			pathname: '/budget?type=entertainment'
-		},
+	{
+		type: 'entertainment',
 		icon: faFilm
 	},
-	power: {
-		link: {
-			pathname: '/budget?type=power'
-		},
+	{
+		type: 'power',
 		icon: faBolt
 	},
-	gas: {
-		link: {
-			pathname: '/budget?type=gas'
-		},
+	{
+		type: 'gas',
 		icon: faGasPump
 	},
-	phone: {
-		link: {
-			pathname: '/budget?type=phone'
-		},
+	{
+		type: 'phone',
 		icon: faPhone
 	},
-	unexpected: {
-		link: {
-			pathname: '/budget?type=unexpected'
-		},
+	{
+		type: 'unexpected',
 		icon: faQuestion
 	},
-	rent: {
-		link: {
-			pathname: '/budget?type=rent'
-		},
+	{
+		type: 'rent',
 		icon: faHome
 	},
-}
+]
 
-export const NavSection = ({ activeLink }) => {
+export const NavSection = ({ activeLink, handleSelection }) => {
 	const acitve = (link) => (name) => link === name;
 	const isActive = acitve(activeLink);
+
 	return (
 		<Container>
-			{Object.keys(config).map((c, i) => <IconButton active={isActive(c)} link={config[c].link} icon={config[c].icon} size='3x' key={i} />)}
+			{config.map((c, i) => <IconButton onClick={handleSelection(c.type)} active={isActive(c.type)} icon={c.icon} size='3x' key={i} />)}
 		</Container>
 	);
 };
