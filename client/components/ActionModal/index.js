@@ -19,10 +19,10 @@ export const ActionModal = ({
 	const handleNote = (e) => {
 		setNote(e.target.value)
 	}
-
+	console.log(parseFloat(amount, 10))
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		updateFn({ amount: parseInt(amount, 10), note })
+		updateFn({ amount: parseFloat(amount, 10), note })
 		handleModal();
 	}
 	return (
