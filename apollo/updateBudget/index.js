@@ -1,10 +1,13 @@
 import { add, subtract, apply } from 'lodash/fp'
 import { connect } from '../../database';
+import { AuthenticationError } from 'apollo-server-core';
 
 const pAdd = apply(add);
 const pSubtract = apply(subtract);
 
-export async function updateBudget(parent, { type, action }) {
+export async function updateBudget(parent, { type, action }, { user }) {
+  if (!user) throw new AuthenticationError('must be logged in');
+
   const { client } = await connect();
   const isAdd = action.operator === 'add';
 
@@ -23,7 +26,7 @@ export async function updateBudget(parent, { type, action }) {
       const [fullBudget] = data;
 
       const oldBudget = fullBudget[type];
-      console.log('this is oooooold budget', type);
+
       const update = {
         $set: {
           grand_amount: isAdd

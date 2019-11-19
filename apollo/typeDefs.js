@@ -37,7 +37,13 @@ export const typeDefs = gql`
     getFullBudget: FullBudget
   }
 
+  type Token {
+    token: String
+  }
+
   type Mutation {
     updateBudget(type: String!, action: Action!): Budget
+    login(email: String, password: String): Token
+    signUp(email: String, password: String): Token
   }
   `

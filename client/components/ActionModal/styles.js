@@ -7,7 +7,12 @@ export const StyledModal = Modal.styled`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
+	background-color: white;
+	
+	@media (max-width: 500px) {
+		width: 15rem;
+		height: 15rem;
+	}
 `
 
 export const Container = styled.div`
@@ -33,6 +38,11 @@ export const Input = styled.input`
 	height: 20px;
 	margin: 5px 0;
 	font-size: 16px;
+
+	@media (max-width: 500px) {
+		height: 30px;
+		font-size: 18px;
+	}
 `
 
 export const ButtonContainer = styled.div`
@@ -48,6 +58,10 @@ export const Button = styled.button`
 
 	:hover {
 		background-color: #c4c6c6;
+	}
+
+	@media (max-width: 500px) {
+		padding: 15px;
 	}
 `
 

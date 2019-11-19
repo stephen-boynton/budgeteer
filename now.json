@@ -2,6 +2,7 @@
   "name": "Budgeteer",
   "version": 2,
   "env": {
-    "DATABASE_URI": "@database_uri"
+    "DATABASE_URI": "@database_uri",
+    "AUTH_STRING": "@auth-string"
   }
 }

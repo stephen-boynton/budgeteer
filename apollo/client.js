@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import nookies from 'nookies';
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -140,9 +141,13 @@ function createIsomorphLink() {
     return new SchemaLink({ schema })
   } else {
     const { HttpLink } = require('apollo-link-http')
+    const { token } = nookies.get({});
     return new HttpLink({
       uri: '/api/graphql',
       credentials: 'same-origin',
+      headers: {
+        authorization: token || ''
+      }
     })
   }
 }

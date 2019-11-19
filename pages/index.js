@@ -1,50 +1,109 @@
-import React, { useState } from 'react'
-import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
-import Layout from '../client/components/Layout'
-import { GET_FULL_BUDGET } from '../client/gql'
-// @TODO: PWA config: https://github.com/hanford/next-offline
+import { useState } from 'react';
+import Router from 'next/router';
+import nookies from 'nookies';
+import styled from 'styled-components';
+import { useMutation } from '@apollo/react-hooks'
+import { LOGIN } from '../client/gql'
+
+const Container = styled.div`
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const LoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 40px;
+`
+
+const Input = styled.input`
+	width: 200px;
+	height: 20px;
+	margin: 5px 0;
+	font-size: 16px;
+
+	@media (max-width: 500px) {
+		height: 30px;
+		font-size: 18px;
+	}
+`
+
+const Title = styled.h1`
+  font-size: 50px;
+  margin-bottom: 50px;
+`
+
+export const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: space-around;
+	width: 200px;
+	margin: 10px 0px;
+`
+
+export const Button = styled.button`
+	padding: 5px;
+	font-size: 16px;
+
+	:hover {
+		background-color: #c4c6c6;
+	}
+
+	@media (max-width: 500px) {
+		padding: 15px;
+	}
+`
+
+export const TitleContainer = styled.div`
+padding: 25px;
+`
 
 export default () => {
-  const [title, setTitle] = useState('overview');
-  let selectedData = {
-    amount: 0,
-    total: 0
-  };
+  const [login, { data = {}, error }] = useMutation(LOGIN)
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
-  const {
-    data,
-    error
-  } = useQuery(GET_FULL_BUDGET)
+  const handleEmail = (e) => {
+    setEmail(e.target.value)
+  }
 
-  const handleSelection = (type) => (e) => {
+  const handlePassword = (e) => {
+    setPassword(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    return setTitle(type)
+    login({ variables: { email, password } })
   }
 
-  if (!data) return (<div><h1>Loading</h1></div>);
-  if (error) return console.log(error);
-  const isOverview = title === 'overview'
-  const { getFullBudget: fullBudget } = data;
-
-  if (isOverview) {
-    selectedData = {
-      amount: fullBudget.grand_amount,
-      total: fullBudget.grand_total
-    }
-  } else {
-    selectedData = {
-      amount: fullBudget[title].amount,
-      total: fullBudget[title].total
-    }
+  if (data.login && data.login.token) {
+    nookies.set({}, 'token', data.login.token);
+    Router.push('/budget');
   }
-
   return (
-    <Layout
-      title={title}
-      data={selectedData}
-      handleSelection={handleSelection}
-      allowActions={!isOverview}
-    />
+    <Container>
+      <TitleContainer>
+        <Title>The Budgeteer</Title>
+      </TitleContainer>
+      <LoginForm>
+        <Input placeholder="Email" onChange={handleEmail} />
+        <Input placeholder="Password" type="password" onChange={handlePassword} />
+        <ButtonContainer>
+          <Button type="submit" onClick={handleSubmit}>Submit</Button>
+          <Button>Cancel</Button>
+        </ButtonContainer>
+      </LoginForm>
+    </Container>
   )
 }
+
+
+/**
+ * There's a loop going on between the two pages trying to figure out auth, one has it, one doesn't
+ */
