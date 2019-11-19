@@ -40,6 +40,7 @@ const getUser = async ({ email, password }) => {
 export const resolvers = {
   Query: {
     async getFullBudget(parent, args, ctx) {
+      console.log('get full budget user', ctx);
       if (ctx.user) return getLatestBudget();
       return null;
     }

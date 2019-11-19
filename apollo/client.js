@@ -4,6 +4,7 @@ import nookies from 'nookies';
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { setContext } from 'apollo-link-context'
 
 let apolloClient = null
 
@@ -134,6 +135,18 @@ function createApolloClient(initialState = {}) {
   })
 }
 
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const { token } = nookies.get({});
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `${token}` : "",
+    }
+  }
+});
+
 function createIsomorphLink() {
   if (typeof window === 'undefined') {
     const { SchemaLink } = require('apollo-link-schema')
@@ -142,12 +155,10 @@ function createIsomorphLink() {
   } else {
     const { HttpLink } = require('apollo-link-http')
     const { token } = nookies.get({});
-    return new HttpLink({
+    console.log('i bet his is empty first time', token);
+    return authLink.concat(new HttpLink({
       uri: '/api/graphql',
-      credentials: 'same-origin',
-      headers: {
-        authorization: token || ''
-      }
-    })
+      credentials: 'same-origin'
+    }));
   }
 }

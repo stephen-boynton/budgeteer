@@ -64,7 +64,9 @@ export const TitleContainer = styled.div`
 padding: 25px;
 `
 
-export default () => {
+const App = ({ token }) => {
+  if (token) Router.push('/budget');
+
   const [login, { data = {}, error }] = useMutation(LOGIN)
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -103,7 +105,12 @@ export default () => {
   )
 }
 
+App.getInitialProps = (ctx) => {
+  const { token } = nookies.get(ctx);
+  return { token }
+}
 
+export default App;
 /**
  * There's a loop going on between the two pages trying to figure out auth, one has it, one doesn't
  */

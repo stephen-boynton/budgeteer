@@ -26,7 +26,7 @@ const Budgeteer = () => {
   if (error) return console.log(error);
 
   const isOverview = title === 'overview'
-  const { getFullBudget: fullBudget = {} } = data;
+  const { getFullBudget: fullBudget } = data;
 
   if (isOverview) {
     selectedData = {
