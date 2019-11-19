@@ -11,9 +11,9 @@ export default class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: App => props => sheet.collectStyles(
-          <>
-          <App {...props} />
-          </>
+            <>
+              <App {...props} />
+            </>
           )
         });
 
@@ -41,6 +41,7 @@ export default class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"
           />
+          <link rel="manifest" href="/static/manifest.json" />
           <link href="https://fonts.googleapis.com/css?family=Lato|Source+Sans+Pro&display=swap" rel="stylesheet" />
           <GlobalStyle />
         </Head>
