@@ -155,7 +155,7 @@ function createIsomorphLink() {
   } else {
     const { HttpLink } = require('apollo-link-http')
     const { token } = nookies.get({});
-    console.log('i bet his is empty first time', token);
+
     return authLink.concat(new HttpLink({
       uri: '/api/graphql',
       credentials: 'same-origin'
