@@ -1,4 +1,4 @@
-import { faShoppingBag, faWineBottle, faLightbulb, faGasPump, faPhone, faQuestion, faHome, faShoppingCart, faBolt, faTicketAlt, faFilm, faAsterisk } from '@fortawesome/free-solid-svg-icons';
+import { faGasPump, faPhone, faQuestion, faHome, faShoppingCart, faBolt, faTicketAlt, faFilm, faAsterisk } from '@fortawesome/free-solid-svg-icons';
 
 import { IconButton } from '../IconButton'
 import { Container } from './styles';

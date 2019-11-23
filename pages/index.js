@@ -65,8 +65,7 @@ padding: 25px;
 `
 
 const App = ({ token }) => {
-  if (token) Router.push('/budget');
-
+  if (token && typeof window === 'object') Router.push('/budget');
   const [login, { data = {}, error }] = useMutation(LOGIN)
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);

@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks'
 import Layout from '../client/components/Layout'
 import { GET_FULL_BUDGET } from '../client/gql'
 import { auth } from '../client/utils/auth'
+import { LoadingScreen } from '../client/components/LoadingScreen'
 // @TODO: PWA config: https://github.com/hanford/next-offline
 
 const Budgeteer = () => {
@@ -22,7 +23,7 @@ const Budgeteer = () => {
     return setTitle(type)
   }
 
-  if (!data) return (<div><h1>Loading</h1></div>);
+  if (!data) return (<LoadingScreen />);
   if (error) return console.log(error);
 
   const isOverview = title === 'overview'
