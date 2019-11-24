@@ -2,6 +2,16 @@ import { connect } from '../database'
 import { updateBudget } from './updateBudget'
 import { hashPass, makeToken, authentication, verifyPass } from './authenticate';
 import { AuthenticationError } from 'apollo-server-core';
+import budgetSchema from '../database/schema.json';
+
+const newBudget = async () => {
+  const { collection } = await connect();
+  const schema = {
+    ...budgetSchema,
+    active_date: new Date().toISOString()
+  }
+  await collection.insertOne(schema)
+}
 
 const getLatestBudget = async () => {
   const { collection } = await connect();
@@ -52,6 +62,16 @@ export const resolvers = {
 
     async signUp(parent, { email, password }) {
       return { token: await saveUser({ email, password }) }
+    },
+
+    async startNewBudget() {
+      try {
+        await newBudget();
+        return { success: true }
+      } catch (e) {
+        console.error(e);
+        return { success: false }
+      }
     }
   }
 }

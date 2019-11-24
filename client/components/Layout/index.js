@@ -43,7 +43,7 @@ export default ({ title, data, handleSelection, allowActions }) => {
   return (
     <Container>
       <SettingsContainer>
-        <IconButton icon={faCog} iconColor='white' size="2x" backgroundColor="rgba(0,0,0,0)" activeColor="rgba(0,0,0,0)" />
+        <IconButton link='/settings' icon={faCog} iconColor='white' size="2x" backgroundColor="rgba(0,0,0,0)" activeColor="rgba(0,0,0,0)" />
       </SettingsContainer>
       <OverViewStatus allowActions={allowActions} title={title} amount={data.amount} total={data.total} />
       <NavSection activeLink={title} handleSelection={handleSelection} />

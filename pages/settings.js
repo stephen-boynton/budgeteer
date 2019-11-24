@@ -4,7 +4,10 @@ import Layout from '../client/components/Layout'
 import { auth } from '../client/utils/auth'
 import { PRIMARY, SECONDARY } from '../client/styles'
 import { IconButton } from '../client/components/IconButton';
-import { faBackward, faBackspace, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faBackward, faBackspace, faArrowLeft, faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
+import { StartNewMonthModal } from '../client/components/StartNewMonthModal';
+import { useMutation } from '@apollo/react-hooks';
+import { START_NEW_BUDGET, GET_FULL_BUDGET } from '../client/gql';
 
 const Container = styled.div`
 	background-color: ${PRIMARY};
@@ -45,12 +48,22 @@ const SettingButton = styled.button`
 `
 
 const Settings = () => {
+  const [isStartNewMontModalOpen, setStartNewMonthModalOpen] = useState(false);
+  const [startNewMonth] = useMutation(START_NEW_BUDGET, {
+    ignoreResults: true,
+    refetchQueries: [{ query: GET_FULL_BUDGET }]
+  });
+
+  const createToggle = (isBool, setBool) => () => setBool(!isBool);
+
+  const toggleStartNewMonthModal = createToggle(isStartNewMontModalOpen, setStartNewMonthModalOpen);
+
   return (
     <Container>
       <Title>Settings</Title>
       <SettingItemsContainer>
         <SettingItem>
-          <SettingButton>Start New Month</SettingButton>
+          <SettingButton onClick={toggleStartNewMonthModal}>Start New Month</SettingButton>
         </SettingItem>
         <SettingItem>
           <SettingButton>User Account</SettingButton>
@@ -59,7 +72,8 @@ const Settings = () => {
           <SettingButton>Update Budget Template</SettingButton>
         </SettingItem>
       </SettingItemsContainer>
-      <IconButton icon={faArrowLeft} />
+      <IconButton link='/budget' icon={faArrowLeft} />
+      <StartNewMonthModal isOpen={isStartNewMontModalOpen} startNewMonth={startNewMonth} toggleOpen={toggleStartNewMonthModal} />
     </Container>
   )
 }

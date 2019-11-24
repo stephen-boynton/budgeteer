@@ -88,10 +88,18 @@ export const LOGIN = gql`
   }
 `
 
-const UPDATE_BUDGET = gql`
+export const UPDATE_BUDGET = gql`
   mutation UpdateBudget($type: String!, $action: Action!) {
     updateBudget(type: $type, action: $action){
       amount
+    }
+  }
+`
+
+export const START_NEW_BUDGET = gql`
+  mutation StartNewBudget {
+    startNewBudget {
+      success
     }
   }
 `

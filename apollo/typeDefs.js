@@ -41,9 +41,14 @@ export const typeDefs = gql`
     token: String
   }
 
+  type NewBudget {
+    success: Boolean
+  }
+
   type Mutation {
     updateBudget(type: String!, action: Action!): Budget
     login(email: String, password: String): Token
     signUp(email: String, password: String): Token
+    startNewBudget: NewBudget
   }
   `
