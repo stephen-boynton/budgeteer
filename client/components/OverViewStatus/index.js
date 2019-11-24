@@ -61,7 +61,6 @@ export const OverViewStatus = ({
 	const handleAddUpdate = handleUpdate('add');
 
 	if (error) console.log(error)
-	if (data) console.log(data);
 
 	return (
 		<Container>

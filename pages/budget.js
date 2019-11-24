@@ -1,10 +1,45 @@
 import React, { useState } from 'react'
+import {
+  __,
+  apply,
+  assoc,
+  allPass,
+  complement,
+  entries,
+  equals,
+  filter,
+  first,
+  flatten,
+  get,
+  isObject,
+  juxt,
+  last,
+  map,
+  pipe,
+  sortBy,
+  tap
+} from 'lodash/fp'
 import { useQuery } from '@apollo/react-hooks'
 import Layout from '../client/components/Layout'
 import { GET_FULL_BUDGET } from '../client/gql'
 import { auth } from '../client/utils/auth'
 import { LoadingScreen } from '../client/components/LoadingScreen'
-// @TODO: PWA config: https://github.com/hanford/next-offline
+
+const notEqual = complement(equals)
+
+const createGrandHistory = pipe(
+  entries,
+  filter(pipe(
+    last,
+    isObject
+  )),
+  map(pipe(
+    juxt([first, pipe(last, get('history'))]),
+    ([category, history]) => map(assoc('category', category), history)
+  )),
+  flatten,
+  sortBy(p => p.timestamp)
+)
 
 const Budgeteer = () => {
   const [title, setTitle] = useState('overview');
@@ -32,12 +67,14 @@ const Budgeteer = () => {
   if (isOverview) {
     selectedData = {
       amount: fullBudget.grand_amount,
-      total: fullBudget.grand_total
+      total: fullBudget.grand_total,
+      history: createGrandHistory(fullBudget)
     }
   } else {
     selectedData = {
       amount: fullBudget[title].amount,
-      total: fullBudget[title].total
+      total: fullBudget[title].total,
+      history: fullBudget[title].history
     }
   }
 
