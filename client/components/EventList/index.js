@@ -9,8 +9,8 @@ export const EventList = ({ eventList = [], isOpen, toggleOpen }) => {
   return (
     <StyledModal isOpen={isOpen} onBackgroundClick={toggleOpen} >
       <EventListContainer>
-        {eventList.map((event) => (
-          <EventListItem operator={event.operator}>
+        {eventList.map((event, i) => (
+          <EventListItem operator={event.operator} key={i}>
             <div>
               <Amount>
                 {event.operator === 'subtract' ? ' - ' : ' + '}${formatMoney(event.amount)}

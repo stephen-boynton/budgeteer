@@ -1,10 +1,10 @@
 import styled from 'styled-components';
+import { PRIMARY } from '../../styles';
 
 export const Container = styled.div`
-	background-color: #1ca263;
+	background-color: ${PRIMARY};
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 	height: 300px;
 	width: 100%;

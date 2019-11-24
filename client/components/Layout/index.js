@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import { OverViewStatus } from '../OverViewStatus'
 import { NavSection } from '../NavSection'
 import { EventList } from '../EventList'
-import { PRIMARY } from '../../styles'
+import { PRIMARY, SECONDARY } from '../../styles'
+import { IconButton } from '../IconButton'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 const Container = styled.div`
   display: flex;
@@ -14,6 +16,14 @@ const Container = styled.div`
   z-index: 1000;
 `
 
+const SettingsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: ${PRIMARY};
+  width: 100%;
+  justify-content: flex-end;
+`
+
 const HistoryButton = styled.button`
   background-color: white;
   font-size: 20px;
@@ -21,7 +31,7 @@ const HistoryButton = styled.button`
   margin: 20px 0;
   border: none;
   font-weight: bold;
-  color: ${PRIMARY}
+  color: ${PRIMARY};
 `
 
 export default ({ title, data, handleSelection, allowActions }) => {
@@ -32,6 +42,9 @@ export default ({ title, data, handleSelection, allowActions }) => {
 
   return (
     <Container>
+      <SettingsContainer>
+        <IconButton icon={faCog} iconColor='white' size="2x" backgroundColor="rgba(0,0,0,0)" activeColor="rgba(0,0,0,0)" />
+      </SettingsContainer>
       <OverViewStatus allowActions={allowActions} title={title} amount={data.amount} total={data.total} />
       <NavSection activeLink={title} handleSelection={handleSelection} />
       <HistoryButton onClick={toggleOpen}>History</HistoryButton>

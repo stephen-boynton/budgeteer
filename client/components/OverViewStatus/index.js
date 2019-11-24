@@ -1,5 +1,5 @@
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Container, Title, IconContainer } from './styles';
 import { BigMoney } from '../BigMoney';
 import { ProgressBar } from '../ProgressBar';
@@ -73,8 +73,8 @@ export const OverViewStatus = ({
 						<IconButton icon={faPlus} onClick={handleAddModal} />
 						<IconButton icon={faMinus} iconColor="#e6494c" onClick={handleSubtractModal} />
 					</IconContainer>
-					<ActionModal title={`Add to ${title}`} total={amount} updateFn={handleAddUpdate} isOpen={isAddModalOpen} handleModal={handleAddModal} />
-					<ActionModal title={`Deduct from ${title}`} total={amount} updateFn={handleSubtractUpdate} isOpen={isSubtractModalOpen} handleModal={handleSubtractModal} />
+					<ActionModal title={`Add to ${startCase(title)}`} total={amount} updateFn={handleAddUpdate} isOpen={isAddModalOpen} handleModal={handleAddModal} />
+					<ActionModal title={`Deduct from ${startCase(title)}`} total={amount} updateFn={handleSubtractUpdate} isOpen={isSubtractModalOpen} handleModal={handleSubtractModal} />
 				</>
 			}
 		</Container>
