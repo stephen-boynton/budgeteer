@@ -10,8 +10,8 @@ export const StyledModal = Modal.styled`
 	background-color: white;
 	
 	@media (max-width: 500px) {
-		width: 15rem;
-		height: 15rem;
+		width: 19rem;
+		height: 19rem;
 	}
 `
 
