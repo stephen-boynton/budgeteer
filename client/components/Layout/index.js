@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { OverViewStatus } from '../OverViewStatus'
 import { NavSection } from '../NavSection'
 import { EventList } from '../EventList'
-import { PRIMARY, SECONDARY } from '../../styles'
+import { PRIMARY } from '../../styles'
 import { IconButton } from '../IconButton'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 
@@ -19,7 +19,8 @@ const Container = styled.div`
 const SettingsContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${PRIMARY};
+  background-color: rgba(0,0,0,0);
+  position: absolute;
   width: 100%;
   justify-content: flex-end;
 `

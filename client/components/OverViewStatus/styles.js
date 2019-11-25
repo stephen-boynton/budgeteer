@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import { PRIMARY } from '../../styles';
 
 export const Container = styled.div`
-	background-color: ${PRIMARY};
+	background-color: ${p => p.status};
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	height: 300px;
 	width: 100%;
+	padding-top: 75px;
 	border-bottom-left-radius: 100%;
   border-bottom-right-radius: 100%;
 `;

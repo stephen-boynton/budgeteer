@@ -9,6 +9,7 @@ import { GET_FULL_BUDGET } from '../../gql'
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { startCase, getOr } from 'lodash/fp'
+import { RED, PRIMARY } from '../../styles';
 
 const UPDATE_BUDGET = gql`
   mutation UpdateBudget($type: String!, $action: Action!) {
@@ -18,7 +19,11 @@ const UPDATE_BUDGET = gql`
   }
 `
 
-const noop = (x) => null;
+const STATUS = {
+	LOW_FUNDS: RED,
+	NEGATIVE: '#9EA21A',
+	HEALTHY: PRIMARY
+}
 
 export const OverViewStatus = ({
 	total,
@@ -26,9 +31,15 @@ export const OverViewStatus = ({
 	title,
 	allowActions = true
 }) => {
-
 	const [isAddModalOpen, setAddModalOpen] = useState(false);
 	const [isSubtractModalOpen, setSubtractModalOpen] = useState(false);
+
+	const isRunningOut = (total * 0.1) > amount;
+	const isNegative = amount < 0;
+
+	const containerState = isRunningOut
+		? STATUS.LOW_FUNDS
+		: STATUS.HEALTHY
 
 	const [updateBudget, { data = {}, error }] = useMutation(UPDATE_BUDGET, {
 		ignoreResults: true,
@@ -63,7 +74,7 @@ export const OverViewStatus = ({
 	if (error) console.log(error)
 
 	return (
-		<Container>
+		<Container status={containerState}>
 			{title && <Title>{startCase(title)}</Title>}
 			<BigMoney amount={amount} />
 			<ProgressBar total={total} amount={amount} />
